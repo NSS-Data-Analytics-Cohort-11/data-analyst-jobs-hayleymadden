@@ -1,4 +1,4 @@
--- Intiial analysis database preview
+-- Intial analysis database preview
 
 SELECT *
 FROM data_analyst_jobs
@@ -91,32 +91,32 @@ WHERE location = 'CA';
 -- 9.	Find the name of each company and its average star rating for all companies that have more than 5000 reviews across all locations. How many companies are there with more that 5000 reviews across all locations?
 
 SELECT 
-	company AS name_of_company, 
-	avg(star_rating) AS average_star_rating, 
-	SUM(review_count) AS total_reviews
+	DISTINCT company AS name_of_company, 
+	avg(star_rating) AS average_star_rating
 FROM data_analyst_jobs
+WHERE review_count > 5000
+AND company IS NOT NULL
 GROUP BY name_of_company
-HAVING sum(review_count) > 5000
 ORDER BY average_star_rating DESC;
 
--- Answer: 71 Companies have more than 5000 reviews across all locations.
+-- Answer: 40 Companies have more than 5000 reviews across all locations.
 
 -- 10.	Add the code to order the query in #9 from highest to lowest average star rating. Which company with more than 5000 reviews across all locations in the dataset has the highest star rating? What is that rating?
 
 SELECT 
-	company AS name_of_company, 
-	avg(star_rating) AS average_star_rating, 
-	SUM(review_count) AS total_reviews
+	DISTINCT (company) AS name_of_company, 
+	avg(star_rating) AS average_star_rating
 FROM data_analyst_jobs
+WHERE review_count > 5000
+AND company IS NOT NULL
 GROUP BY name_of_company
-HAVING sum(review_count) > 5000
 ORDER BY average_star_rating DESC;
 
--- Answer: Google has the highest star rating.
+-- Answer: American Express, General Motors, Kaiser Permanente, Microsoft, Nike, and Unilever have the highest star ratings of 4.1999.
 
 -- 11.	Find all the job titles that contain the word ‘Analyst’. How many different job titles are there?
 
-SELECT title
+SELECT DISTINCT title
 FROM data_analyst_jobs
 WHERE title ILIKE ('%Analyst%');
 
